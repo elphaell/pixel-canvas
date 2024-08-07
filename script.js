@@ -19,6 +19,7 @@ function generateGrid() {
             let canvasItem = document.createElement("div");
             canvasItem.style.flex = "auto";
             canvasItem.style.border = "1px solid black";
+            canvasItem.classList.add("pixel-cell");
             canvasRow.append(canvasItem);
         }
 
@@ -26,9 +27,24 @@ function generateGrid() {
     }
 }
 
+function solidColour() {
+    let cellList = document.querySelectorAll(".pixel-cell");
+
+    cellList.forEach((cell) => {
+        cell.addEventListener("mouseenter", (e) => {
+
+            // TODO make colour selectable
+            cell.style.backgroundColor = "red";
+        });
+    });
+}
+
 
 // tester button
 // TODO refactor to update the input dynamically
 // consider using a slider
 const btn = document.querySelector("#btn");
-btn.onclick = () => generateGrid();
+btn.onclick = () => {
+    generateGrid();
+    solidColour();
+};
