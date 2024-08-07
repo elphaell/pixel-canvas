@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.grey-background {
+.accent-background {
     background-color: lightgray;
 }
 
@@ -12,5 +12,7 @@
     width: 400px;
     height: 400px;
 
-    background-color: brown;
+    display: flex;
+    flex-direction: column;
+
 }
