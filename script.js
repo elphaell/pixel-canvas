@@ -1,5 +1,9 @@
 const pixelCanvas = document.querySelector("#canvas");
 const pixelCanvasSize = 400;
+const solidFillBtn = document.querySelector("#solid-fill-btn");
+const darkenFillBtn = document.querySelector("#darken-fill-btn");
+
+let controller = new AbortController();
 
 // pSBC - Shade Blend Convert - Version 4.1 - 01/7/2021
 // https://github.com/PimpTrizkit/PJs/blob/master/pSBC.js
@@ -33,6 +37,9 @@ pSBC.pSBCr=(d)=>{
 	}return x
 };
 
+// End pSBC code
+// --------------
+
 function generateGrid() {
 
     // clear the grid first!!
@@ -60,37 +67,57 @@ function generateGrid() {
     }
 }
 
-// TODO Refactor into mode selector
-// TODO Remove hard coded colours
-function solidColour() {
+function addPaintingModeListeners(paintingMode) {
     let cellList = document.querySelectorAll(".pixel-cell");
 
     cellList.forEach((cell) => {
-        cell.addEventListener("mouseenter", (e) => {
 
-            // TODO make colour selectable
-            cell.style.backgroundColor = "red";
-        });
+        // Refresh state
+        let visitedTimes = 0;
+
+        // Add event listeners for current painting mode
+        switch (paintingMode) {
+            case "solidFill":
+                cell.addEventListener("mouseenter", () => {
+
+                    // TODO make colour selectable
+                    cell.style.backgroundColor = "red";
+                }, {
+                    signal: controller.signal
+                });
+                break;
+        
+            case "darkenFill":
+                cell.addEventListener("mouseenter", () => {
+
+                    if (visitedTimes < 10) { visitedTimes++ };
+        
+                    cell.style.backgroundColor = pSBC(-0.1 * visitedTimes, "rgb(255, 255, 255)", "rgb(255, 0, 0)");
+                }, {
+                    signal: controller.signal
+                });
+                break;
+        }
+        
     });
 }
 
 
-function darkenColour() {
-    let cellList = document.querySelectorAll(".pixel-cell");
 
-    cellList.forEach((cell) => {
+// Add listeners to buttons
+solidFillBtn.addEventListener("click", () => {
+    // generateGrid();
+    controller.abort();
+    controller = new AbortController();
+    addPaintingModeListeners("solidFill");
+});
 
-        let visitedTimes = 0;
-
-        cell.addEventListener("mouseenter", (e) => {
-
-            currentColour = cell.style.backgroundColor;
-            if (visitedTimes < 10) { visitedTimes++ };
-
-            cell.style.backgroundColor = pSBC(-0.1 * visitedTimes, "rgb(255, 255, 255)", "rgb(255, 0, 0)");
-        })
-    })
-}
+darkenFillBtn.addEventListener("click", () => {
+    // generateGrid();
+    controller.abort();
+    controller = new AbortController();
+    addPaintingModeListeners("darkenFill");
+});
 
 // tester button
 // TODO refactor to update the input dynamically
@@ -98,5 +125,4 @@ function darkenColour() {
 const btn = document.querySelector("#btn");
 btn.onclick = () => {
     generateGrid();
-    darkenColour();
 };
