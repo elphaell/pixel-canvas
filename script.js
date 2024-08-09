@@ -116,9 +116,9 @@ function addPaintingModeListeners(paintingMode) {
 
                 cell.addEventListener("mouseenter", () => {
 
-                    if (visitedTimes < 5) { visitedTimes++ };
-
                     cell.style.backgroundColor = pSBC(0.2 * visitedTimes, currentPickedColour, blendColour);
+
+                    if (visitedTimes < 5) { visitedTimes++ };
                 }, {
                     signal: controller.signal
                 });
