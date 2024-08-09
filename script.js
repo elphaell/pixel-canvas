@@ -1,5 +1,5 @@
-const pixelCanvas = document.querySelector("#canvas");
-const pixelCanvasSize = 400;
+const hoverCanvas = document.querySelector("#canvas");
+const hoverCanvasSize = 400;
 const solidFillBtn = document.querySelector("#solid-fill-btn");
 const darkenFillBtn = document.querySelector("#darken-fill-btn");
 const blendFillBtn = document.querySelector("#blend-fill-btn");
@@ -51,7 +51,7 @@ pSBC.pSBCr=(d)=>{
 function generateGrid() {
 
     // clear the grid first!!
-    pixelCanvas.replaceChildren();
+    hoverCanvas.replaceChildren();
 
     let pixelCellAmount = document.querySelector("#cell-amount").value;
 
@@ -71,7 +71,7 @@ function generateGrid() {
             canvasRow.append(canvasItem);
         }
 
-        pixelCanvas.append(canvasRow);
+        hoverCanvas.append(canvasRow);
     }
 }
 
