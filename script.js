@@ -139,11 +139,11 @@ function toggleBlendUI(blendState) {
     } else  if (blendState === 1 && blendUIElements.length === 0) {
         const toArrow = document.createElement("div");
         toArrow.classList.add("blend-ui");
-        toArrow.textContent = " -> ";
+        toArrow.textContent = "->";
 
         const blendColourPicker = document.createElement("input");
         blendColourPicker.type = "color";
-        blendColourPicker.value = "#ff0000";
+        blendColourPicker.value = "#0000ff";
         blendColourPicker.classList.add("blend-ui");
 
         blendColourPicker.addEventListener("change", (e) => {
