@@ -14,8 +14,9 @@
       <span>just hover over the cells</span>
     </div>
   
-    <div id="colour-panel" class="accent-background">
+    <div id="settings-panel" class="accent-background">
       <div>TODO</div>
+
       <div id="mode-selector">
         <div>Choose your painting mode:</div>
         <div id="painting-modes">
@@ -28,9 +29,14 @@
           <button type="button" id="refresh-btn">Refresh Canvas</button>
         </div>
       </div>
+
       <div id="colour-picker-box">
         <div>Choose your colour:</div>
         <input type="color" value="#ff0000" id="colour-picker" />
+      </div>
+
+      <div id="canvas-sizing-container">
+        <input type="range" id="canvas-size" min="2" max="64" value="4" step="1" />
       </div>
     </div>
   

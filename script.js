@@ -7,11 +7,13 @@ const gridBtn = document.querySelector("#grid-btn");
 const refreshBtn = document.querySelector("#refresh-btn");
 const colourPicker = document.querySelector("#colour-picker");
 const colourPickerBox = document.querySelector("#colour-picker-box");
+const canvasSize = document.querySelector("#canvas-size");
 
 let controller = new AbortController();
-let lastPickedMode = "";
+let lastPickedMode = "solidFill";
 let currentPickedColour = colourPicker.value;
 let blendColour = "";
+let currentSize = canvasSize.value;
 
 // pSBC - Shade Blend Convert - Version 4.1 - 01/7/2021
 // https://github.com/PimpTrizkit/PJs/blob/master/pSBC.js
@@ -53,16 +55,14 @@ function generateGrid() {
     // clear the grid first!!
     hoverCanvas.replaceChildren();
 
-    let pixelCellAmount = document.querySelector("#cell-amount").value;
-
     // generate the grid using 2 flex directions
     // TODO consider using css classes for the styles
-    for (let i = 0; i < pixelCellAmount; i++) {
+    for (let i = 0; i < currentSize; i++) {
         let canvasRow = document.createElement("div");
         canvasRow.style.display = "flex";
         canvasRow.style.flex = "auto";
 
-        for (let j = 0; j < pixelCellAmount; j++) {
+        for (let j = 0; j < currentSize; j++) {
             let canvasItem = document.createElement("div");
             canvasItem.style.flex = "auto";
             canvasItem.style.border = "1px solid black";
@@ -190,6 +190,18 @@ refreshBtn.addEventListener("click", () => {
 
 colourPicker.addEventListener("change", (e) => {
     currentPickedColour = e.target.value;
+});
+
+canvasSize.addEventListener("input", (e) => {
+    currentSize = e.target.value;
+    generateGrid();
+});
+
+canvasSize.addEventListener("change", () => {
+    controller.abort();
+    controller = new AbortController();
+    toggleBlendUI(0);
+    addPaintingModeListeners(lastPickedMode);
 });
 
 // tester button
