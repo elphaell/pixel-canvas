@@ -157,6 +157,7 @@ function toggleBlendUI(blendState) {
     }
 }
 
+
 // Add listeners to buttons
 // TODO Refactor to an array of painting modes
 solidFillBtn.addEventListener("click", () => {
@@ -205,10 +206,11 @@ canvasSize.addEventListener("change", () => {
     addPaintingModeListeners(lastPickedMode);
 });
 
-// tester button
-// TODO refactor to update the input dynamically
-// consider using a slider
-const btn = document.querySelector("#btn");
-btn.onclick = () => {
+// Initialise defaults on load
+function startup() {
     generateGrid();
-};
+    addPaintingModeListeners(lastPickedMode);
+    cellCount.textContent = `${currentSize} x ${currentSize}`;
+}
+
+document.addEventListener("DOMContentLoaded", startup);
