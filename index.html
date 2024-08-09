@@ -18,13 +18,19 @@
       <div>TODO</div>
       <div id="mode-selector">
         <div>Choose your painting mode:</div>
-        <button type="button" id="solid-fill-btn">Solid Fill</button>
-        <button type="button" id="darken-fill-btn">Darken</button>
-        <button type="button" id="grid-btn">Use Grid</button>
-        <button type="button" id="reset-btn">Refresh Canvas</button>
+        <div id="painting-modes">
+          <button type="button" id="solid-fill-btn">Solid Fill</button>
+          <button type="button" id="darken-fill-btn">Darken</button>
+          <button type="button" id="blend-fill-btn">Blend</button>
+        </div>
+        <div id="utility-btns">
+          <button type="button" id="grid-btn">Use Grid</button>
+          <button type="button" id="refresh-btn">Refresh Canvas</button>
+        </div>
       </div>
       <div id="colour-picker-box">
         <div>Choose your colour:</div>
+        <input type="color" value="#ff0000" id="colour-picker" />
       </div>
     </div>
   

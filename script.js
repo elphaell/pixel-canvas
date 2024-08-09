@@ -2,8 +2,16 @@ const pixelCanvas = document.querySelector("#canvas");
 const pixelCanvasSize = 400;
 const solidFillBtn = document.querySelector("#solid-fill-btn");
 const darkenFillBtn = document.querySelector("#darken-fill-btn");
+const blendFillBtn = document.querySelector("#blend-fill-btn");
+const gridBtn = document.querySelector("#grid-btn");
+const refreshBtn = document.querySelector("#refresh-btn");
+const colourPicker = document.querySelector("#colour-picker");
+const colourPickerBox = document.querySelector("#colour-picker-box");
 
 let controller = new AbortController();
+let lastPickedMode = "";
+let currentPickedColour = colourPicker.value;
+let blendColour = "";
 
 // pSBC - Shade Blend Convert - Version 4.1 - 01/7/2021
 // https://github.com/PimpTrizkit/PJs/blob/master/pSBC.js
@@ -69,6 +77,11 @@ function generateGrid() {
 
 function addPaintingModeListeners(paintingMode) {
     let cellList = document.querySelectorAll(".pixel-cell");
+    if (paintingMode === "blendFill") {
+        toggleBlendUI(1);
+    } else {
+        toggleBlendUI(0);
+    }
 
     cellList.forEach((cell) => {
 
@@ -78,21 +91,34 @@ function addPaintingModeListeners(paintingMode) {
         // Add event listeners for current painting mode
         switch (paintingMode) {
             case "solidFill":
+
                 cell.addEventListener("mouseenter", () => {
 
-                    // TODO make colour selectable
-                    cell.style.backgroundColor = "red";
+                    cell.style.backgroundColor = currentPickedColour;
                 }, {
                     signal: controller.signal
                 });
                 break;
         
             case "darkenFill":
+
                 cell.addEventListener("mouseenter", () => {
 
                     if (visitedTimes < 10) { visitedTimes++ };
         
-                    cell.style.backgroundColor = pSBC(-0.1 * visitedTimes, "rgb(255, 255, 255)", "rgb(255, 0, 0)");
+                    cell.style.backgroundColor = pSBC(-0.1 * visitedTimes, "rgb(255, 255, 255)", currentPickedColour);
+                }, {
+                    signal: controller.signal
+                });
+                break;
+            
+            case "blendFill":
+
+                cell.addEventListener("mouseenter", () => {
+
+                    if (visitedTimes < 5) { visitedTimes++ };
+
+                    cell.style.backgroundColor = pSBC(0.2 * visitedTimes, currentPickedColour, blendColour);
                 }, {
                     signal: controller.signal
                 });
@@ -102,14 +128,41 @@ function addPaintingModeListeners(paintingMode) {
     });
 }
 
+function toggleBlendUI(blendState) {
+    if (blendState === 0) {
+        let blendUIElements = document.querySelectorAll(".blend-ui");
+        blendUIElements.forEach((element) => {
+            colourPickerBox.removeChild(element);
+        });
 
+    } else {
+        const toArrow = document.createElement("div");
+        toArrow.classList.add("blend-ui");
+        toArrow.textContent = " -> ";
+
+        const blendColourPicker = document.createElement("input");
+        blendColourPicker.type = "color";
+        blendColourPicker.value = "#ff0000";
+        blendColourPicker.classList.add("blend-ui");
+
+        blendColourPicker.addEventListener("change", (e) => {
+            blendColour = e.target.value;
+        });
+
+        blendColour = blendColourPicker.value;
+
+        colourPickerBox.append(toArrow, blendColourPicker);     
+    }
+}
 
 // Add listeners to buttons
+// TODO Refactor to an array of painting modes
 solidFillBtn.addEventListener("click", () => {
     // generateGrid();
     controller.abort();
     controller = new AbortController();
     addPaintingModeListeners("solidFill");
+    lastPickedMode = "solidFill";
 });
 
 darkenFillBtn.addEventListener("click", () => {
@@ -117,6 +170,26 @@ darkenFillBtn.addEventListener("click", () => {
     controller.abort();
     controller = new AbortController();
     addPaintingModeListeners("darkenFill");
+    lastPickedMode = "darkenFill";
+});
+
+blendFillBtn.addEventListener("click", () => {
+    controller.abort();
+    controller = new AbortController();
+    addPaintingModeListeners("blendFill");
+    lastPickedMode = "blendFill";
+})
+
+refreshBtn.addEventListener("click", () => {
+    generateGrid();
+    controller.abort();
+    controller = new AbortController();
+    toggleBlendUI(0);
+    addPaintingModeListeners(lastPickedMode);
+});
+
+colourPicker.addEventListener("change", (e) => {
+    currentPickedColour = e.target.value;
 });
 
 // tester button
