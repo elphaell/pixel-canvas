@@ -129,13 +129,14 @@ function addPaintingModeListeners(paintingMode) {
 }
 
 function toggleBlendUI(blendState) {
-    if (blendState === 0) {
-        let blendUIElements = document.querySelectorAll(".blend-ui");
+    let blendUIElements = document.querySelectorAll(".blend-ui");
+
+    if (blendState === 0) {       
         blendUIElements.forEach((element) => {
             colourPickerBox.removeChild(element);
         });
 
-    } else {
+    } else  if (blendState === 1 && blendUIElements.length === 0) {
         const toArrow = document.createElement("div");
         toArrow.classList.add("blend-ui");
         toArrow.textContent = " -> ";
@@ -184,7 +185,6 @@ refreshBtn.addEventListener("click", () => {
     generateGrid();
     controller.abort();
     controller = new AbortController();
-    toggleBlendUI(0);
     addPaintingModeListeners(lastPickedMode);
 });
 
@@ -200,7 +200,6 @@ canvasSize.addEventListener("input", (e) => {
 canvasSize.addEventListener("change", () => {
     controller.abort();
     controller = new AbortController();
-    toggleBlendUI(0);
     addPaintingModeListeners(lastPickedMode);
 });
 
