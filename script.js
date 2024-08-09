@@ -8,6 +8,7 @@ const refreshBtn = document.querySelector("#refresh-btn");
 const colourPicker = document.querySelector("#colour-picker");
 const colourPickerBox = document.querySelector("#colour-picker-box");
 const canvasSize = document.querySelector("#canvas-size");
+const cellCount = document.querySelector("#cell-count");
 
 let controller = new AbortController();
 let lastPickedMode = "solidFill";
@@ -195,6 +196,7 @@ colourPicker.addEventListener("change", (e) => {
 canvasSize.addEventListener("input", (e) => {
     currentSize = e.target.value;
     generateGrid();
+    cellCount.textContent = `${currentSize} x ${currentSize}`;
 });
 
 canvasSize.addEventListener("change", () => {
