@@ -9,6 +9,7 @@ const colourPicker = document.querySelector("#colour-picker");
 const colourPickerBox = document.querySelector("#colour-picker-box");
 const canvasSize = document.querySelector("#canvas-size");
 const cellCount = document.querySelector("#cell-count");
+const paintingModeButtons = document.querySelector("#painting-modes");
 
 let controller = new AbortController();
 let lastPickedMode = "solidFill";
@@ -157,6 +158,24 @@ function toggleBlendUI(blendState) {
     }
 }
 
+function highlightCurrentModeButton() {
+    // Remove highlighting from all buttons
+    let selected = document.querySelector(".button-selected");
+    if (selected) {selected.classList.remove("button-selected")};
+
+    // Add highlight to current mode
+    switch (lastPickedMode) {
+        case "solidFill":
+            solidFillBtn.classList.add("button-selected");
+            break;
+        case "darkenFill":
+            darkenFillBtn.classList.add("button-selected");
+            break;
+        case "blendFill":
+            blendFillBtn.classList.add("button-selected");
+            break;
+    }
+}
 
 // Add listeners to buttons
 // TODO Refactor to an array of painting modes
@@ -166,6 +185,7 @@ solidFillBtn.addEventListener("click", () => {
     controller = new AbortController();
     addPaintingModeListeners("solidFill");
     lastPickedMode = "solidFill";
+    highlightCurrentModeButton();
 });
 
 darkenFillBtn.addEventListener("click", () => {
@@ -174,6 +194,7 @@ darkenFillBtn.addEventListener("click", () => {
     controller = new AbortController();
     addPaintingModeListeners("darkenFill");
     lastPickedMode = "darkenFill";
+    highlightCurrentModeButton();
 });
 
 blendFillBtn.addEventListener("click", () => {
@@ -181,6 +202,7 @@ blendFillBtn.addEventListener("click", () => {
     controller = new AbortController();
     addPaintingModeListeners("blendFill");
     lastPickedMode = "blendFill";
+    highlightCurrentModeButton();
 })
 
 refreshBtn.addEventListener("click", () => {
@@ -210,6 +232,7 @@ canvasSize.addEventListener("change", () => {
 function startup() {
     generateGrid();
     addPaintingModeListeners(lastPickedMode);
+    highlightCurrentModeButton();
     cellCount.textContent = `${currentSize} x ${currentSize}`;
 }
 
