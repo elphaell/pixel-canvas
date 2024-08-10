@@ -49,6 +49,10 @@ button {
     font-weight: 500;
 }
 
+.cell-border {
+    border: 1px solid black;
+}
+
 #canvas {
     width: 400px;
     height: 400px;
@@ -80,6 +84,10 @@ button {
     font-size: 48px;
     font-weight: 300;
     color: rgb(78, 78, 78);
+}
+
+#canvas-base {
+    margin-top: -10px;
 }
 
 #mode-selector div {

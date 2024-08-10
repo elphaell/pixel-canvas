@@ -9,13 +9,13 @@ const colourPicker = document.querySelector("#colour-picker");
 const colourPickerBox = document.querySelector("#colour-picker-box");
 const canvasSize = document.querySelector("#canvas-size");
 const cellCount = document.querySelector("#cell-count");
-const paintingModeButtons = document.querySelector("#painting-modes");
 
 let controller = new AbortController();
 let lastPickedMode = "solidFill";
 let currentPickedColour = colourPicker.value;
 let blendColour = "";
 let currentSize = canvasSize.value;
+let gridOn = 1;
 
 // pSBC - Shade Blend Convert - Version 4.1 - 01/7/2021
 // https://github.com/PimpTrizkit/PJs/blob/master/pSBC.js
@@ -67,9 +67,9 @@ function generateGrid() {
         for (let j = 0; j < currentSize; j++) {
             let canvasItem = document.createElement("div");
             canvasItem.style.flex = "auto";
-            canvasItem.style.border = "1px solid black";
             canvasItem.style.backgroundColor = "rgb(255, 255, 255)";
             canvasItem.classList.add("pixel-cell");
+            if (gridOn) { canvasItem.classList.add("cell-border"); }
             canvasRow.append(canvasItem);
         }
 
@@ -203,7 +203,21 @@ blendFillBtn.addEventListener("click", () => {
     addPaintingModeListeners("blendFill");
     lastPickedMode = "blendFill";
     highlightCurrentModeButton();
-})
+});
+
+gridBtn.addEventListener("click", () => {
+    let cells = document.querySelectorAll(".pixel-cell");
+    cells.forEach((cell) => {
+        if (gridOn) {
+            cell.classList.remove("cell-border");
+        } else {
+            cell.classList.add("cell-border");
+        }
+    });
+    
+    if (gridOn) { gridOn = 0}
+    else { gridOn = 1 };
+});
 
 refreshBtn.addEventListener("click", () => {
     generateGrid();
