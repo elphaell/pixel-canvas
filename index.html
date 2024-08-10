@@ -6,47 +6,56 @@
   <title>Hover Canvas</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="page-container">
-    <div id="title">
+  <div id="page-container" class="flex-column spaced">
+    <div id="title" class="flex-column full-centre">
       <h1>Hover Canvas</h1>
       <span>just hover over the cells</span>
     </div>
   
-    <div id="settings-panel" class="accent-background">
-      <div>TODO</div>
+    <div id="settings-panel" class="accent-background flex-column left-justify">
 
-      <div id="mode-selector">
+      <div id="mode-selector" class="">
         <div>Choose your painting mode:</div>
-        <div id="painting-modes">
-          <button type="button" id="solid-fill-btn">Solid Fill</button>
-          <button type="button" id="darken-fill-btn">Darken</button>
-          <button type="button" id="blend-fill-btn">Blend</button>
-        </div>
-        <div id="utility-btns">
-          <button type="button" id="grid-btn">Use Grid</button>
-          <button type="button" id="refresh-btn">Refresh Canvas</button>
+        <div id="button-container" class="flex-row spaced">
+          <div id="painting-modes">
+            <button type="button" id="solid-fill-btn">Solid Fill</button>
+            <button type="button" id="darken-fill-btn">Darken</button>
+            <button type="button" id="blend-fill-btn">Blend</button>
+          </div>
+          <div id="utility-btns">
+            <button type="button" id="grid-btn">Use Grid</button>
+            <button type="button" id="refresh-btn">Refresh Canvas</button>
+          </div>
         </div>
       </div>
 
-      <div id="colour-picker-box">
+      <div id="colour-container">
         <div>Choose your colour:</div>
-        <input type="color" value="#ff0000" id="colour-picker" />
+        <div id="colour-picker-box" class="flex-row full-centre">
+          <input type="color" value="#ff0000" id="colour-picker" />
+        </div>
       </div>
 
-      <div id="canvas-sizing-container">
+      <div id="canvas-sizing-container" >
         <div>Choose the number of cells in the canvas:</div>
-        <input type="range" id="canvas-size" min="2" max="64" value="4" step="1" />
-        <div id="cell-count"></div>
+        <div id="range-container" class="flex-row full-centre">
+          <input type="range" id="canvas-size" min="2" max="64" value="4" step="1" />
+        </div>
       </div>
     </div>
   
     <div id="canvas-container">
-      <div id="canvas"></div>
+      <div id="canvas" class="flex-column"></div>
     </div>
   
-    <div id="canvas-base" class="accent-background"></div>
+    <div id="canvas-base" class="accent-background">
+      <div id="cell-count"></div>
+    </div>
   </div>
   
 </body>

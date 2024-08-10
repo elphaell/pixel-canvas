@@ -2,17 +2,83 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
 }
 
 .accent-background {
-    background-color: lightgray;
+    background-color: rgb(224, 201, 250);
+    padding: 12px 24px;
+    border-radius: 8px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-centre {
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.spaced {
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+}
+
+.left-justify {
+    justify-content: start;
+    gap: 1em;
+}
+
+button {
+    padding: 2px 8px;
+}
+
+.button-selected {
+    border: 3px dashed rgb(228, 205, 105);
 }
 
 #canvas {
     width: 400px;
     height: 400px;
+}
 
-    display: flex;
-    flex-direction: column;
+#page-container {
+    background-color: white;
+}
 
+#title {
+    padding: 12px 24px 0px 24px;
+    color: rgb(78, 78, 78);
+}
+
+#title h1 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+#title span {
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: -10px;
+}
+
+#cell-count {
+    font-size: 48px;
+    font-weight: 300;
+    color: rgb(78, 78, 78);
+}
+
+#mode-selector div {
+    margin-bottom: 5px;
 }
